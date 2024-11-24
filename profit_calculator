@@ -1,0 +1,54 @@
+
+products = {
+    "B.Coffee": {"buying_price": 360},
+    "B.Red": {"buying_price": 240},
+    "C.Milk": {"buying_price": 330},
+    "C.Red": {"buying_price": 230},
+    "C.Coffee": {"buying_price": 350},
+}
+
+def calculate_profit():
+    print("\nWelcome to the Profit Calculator!\n")
+    total_profit = 0
+
+    while True:
+        print("Available products:")
+        for index, product in enumerate(products.keys(), start=1):
+            print(f"{index}. {product}")
+        
+        try:
+            product_number = int(input("\nEnter the product number (or 0 to finish): "))
+            if product_number == 0:
+                break
+            product_name = list(products.keys())[product_number - 1]
+        except (ValueError, IndexError):
+            print("Invalid product number. Please try again.")
+            continue
+        
+        try:
+            quantity = int(input(f"Enter the quantity for {product_name}: "))
+            if quantity <= 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid quantity. Please enter a positive integer.")
+            continue
+
+        try:
+            selling_price = float(input(f"Enter the selling price for {product_name}: "))
+            if selling_price <= 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid selling price. Please enter a positive number.")
+            continue
+
+        buying_price = products[product_name]["buying_price"]
+        profit = (selling_price - buying_price) * quantity
+        total_profit += profit
+        
+        print(f"Profit for {product_name}: {profit:.2f}\n")
+    
+    print(f"\nTotal profit: {total_profit:.2f}\n")
+    print("Thank you for using the Profit Calculator!")
+
+if __name__ == "__main__":
+    calculate_profit()
